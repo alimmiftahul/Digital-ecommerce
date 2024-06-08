@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 
 import { ThemeProvider } from "@/components/ThemeProvider";
+import Navbar from "@/components/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <body
-        className={cn("h-ful relative font-sans antialiased", inter.className)}
+        className={cn("relative h-full font-sans antialiased", inter.className)}
       >
         <ThemeProvider
           attribute="class"
@@ -29,6 +30,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main className="relative flex min-h-screen flex-col">
+            <Navbar />
             <div className="flex-1 flex-grow">{children}</div>
           </main>
         </ThemeProvider>
