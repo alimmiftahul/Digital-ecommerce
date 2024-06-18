@@ -1,11 +1,60 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { PRODUCT_CATEGORIES } from "@/config";
+import { useOnClickOutside } from "@/hoooks/use-on-click-outside";
+import NavItem from "./NavItem";
 
 const NavItems = () => {
   const [activeIndex, setActiveIndex] = useState<null | number>(null);
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setActiveIndex(null);
+      }
+    };
 
-  return <div className="flex h-full gap-4"></div>;
+    document.addEventListener("keydown", handler);
+
+    return () => {
+      document.removeEventListener("keydown", handler);
+    };
+  }, []);
+
+  const isAnyOpen = activeIndex !== null;
+
+  const navRef = useRef<HTMLDivElement | null>(null);
+
+  useOnClickOutside(navRef, () => setActiveIndex(null));
+
+  return (
+    <div className="flex h-full gap-4">
+      {PRODUCT_CATEGORIES.map((category, i) => {
+        const handleOpen = () => {
+          if (activeIndex === i) {
+            setActiveIndex(null);
+          } else {
+            setActiveIndex(i);
+          }
+        };
+
+        const close = () => setActiveIndex(null);
+
+        const isOpen = i === activeIndex;
+
+        return (
+          <NavItem
+            category={category}
+            close={close}
+            handleOpen={handleOpen}
+            isOpen={isOpen}
+            key={category.value}
+            isAnyOpen={isAnyOpen}
+          />
+        );
+      })}
+    </div>
+  );
 };
 
 export default NavItems;
