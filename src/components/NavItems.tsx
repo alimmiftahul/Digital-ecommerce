@@ -15,7 +15,6 @@ const NavItems = () => {
     };
 
     document.addEventListener("keydown", handler);
-
     return () => {
       document.removeEventListener("keydown", handler);
     };
@@ -28,7 +27,7 @@ const NavItems = () => {
   useOnClickOutside(navRef, () => setActiveIndex(null));
 
   return (
-    <div className="flex h-full gap-4">
+    <div className="flex h-full gap-4" ref={navRef}>
       {PRODUCT_CATEGORIES.map((category, i) => {
         const handleOpen = () => {
           if (activeIndex === i) {
@@ -41,7 +40,6 @@ const NavItems = () => {
         const close = () => setActiveIndex(null);
 
         const isOpen = i === activeIndex;
-
         return (
           <NavItem
             category={category}
