@@ -10,8 +10,8 @@ const Navbar = () => {
   const user = null;
 
   return (
-    <div className="sticky inset-x-0 top-0 z-50 h-16 bg-white">
-      <header className="relative bg-white">
+    <div className="sticky inset-x-0 top-0 z-50 h-16">
+      <header className="relative">
         <MaxWidthWrapper>
           <div className="border-b border-gray-200">
             <div className="flex h-16 items-center">
