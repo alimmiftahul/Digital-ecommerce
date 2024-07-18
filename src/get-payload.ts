@@ -10,12 +10,14 @@ dotenv.config({
 
 const transporter = nodemailer.createTransport({
   host: "smtp.resend.com",
-  secure: true,
   port: 465,
+  secure: true, // true for 465, false for other ports
   auth: {
     user: "resend",
     pass: process.env.RESEND_API_KEY,
   },
+  logger: true,
+  debug: true,
 });
 
 let cached = (global as any).payload;
@@ -45,7 +47,7 @@ export const getPayloadClient = async ({
     cached.promise = payload.init({
       email: {
         transport: transporter,
-        fromAddress: "onboarding@resend.com",
+        fromAddress: "alim@asynco.space",
         fromName: "DigitalHippo",
       },
       secret: process.env.PAYLOAD_SECRET,
@@ -57,6 +59,7 @@ export const getPayloadClient = async ({
     cached.client = await cached.promise;
   } catch (error: unknown) {
     cached.promise = null;
+    console.error("Failed to initialize Payload:", error);
     throw error;
   }
   return cached.client;
