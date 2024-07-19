@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import Navbar from "@/components/Navbar";
 import Providers from "@/components/Providers";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,6 +37,7 @@ export default function RootLayout({
             <div className="flex-1 flex-grow">{children}</div>
           </Providers>
         </main>
+        <Toaster position="bottom-left" richColors />
         {/* </ThemeProvider> */}
       </body>
     </html>

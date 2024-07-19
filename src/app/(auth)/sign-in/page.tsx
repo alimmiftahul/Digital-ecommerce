@@ -18,9 +18,14 @@ import {
 import { trpc } from "@/trpc/client";
 import { toast } from "sonner";
 import { ZodError } from "zod";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const page = () => {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const isSeler = searchParams.get("as") === "seller";
+
   const {
     register,
     handleSubmit,
@@ -28,13 +33,11 @@ const page = () => {
   } = useForm<TAuthCredentialsValidator>({
     resolver: zodResolver(AuthCredentialsValidator),
   });
-  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
-
-  const router = useRouter();
 
   const { mutate, isLoading } = trpc.auth.createPayloadUser.useMutation({
     onError: (err) => {
@@ -64,15 +67,15 @@ const page = () => {
         <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
           <div className="flex flex-col items-center space-y-2 text-center">
             <Icons.logo className="h-20 w-20" />
-            <h1 className="text-2xl"> Create Account</h1>
+            <h1 className="text-2xl">Sign in to your Account</h1>
             <Link
-              href="/sign-in"
+              href="/sign-up"
               className={buttonVariants({
                 variant: "link",
                 className: "gap-1.5",
               })}
             >
-              Already have an account ? Sign-in
+              Don't have an account, please Sign Up!
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -110,9 +113,7 @@ const page = () => {
                     className="flex w-fit justify-end"
                   >
                     {showPassword ? (
-                      <p className="text-[10px] text-blue-600">
-                        Show Password{" "}
-                      </p>
+                      <p className="text-[10px] text-blue-600">Show Password</p>
                     ) : (
                       <p className="text-[10px] text-blue-600">Hide Password</p>
                     )}
@@ -123,9 +124,19 @@ const page = () => {
                     </p>
                   )}
                 </div>
-                <Button className="py-2">Sign Up</Button>
+                <Button className="py-2">Sign In</Button>
               </div>
             </form>
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  or
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
