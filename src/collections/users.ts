@@ -26,13 +26,18 @@ export const Users: CollectionConfig = {
   },
   fields: [
     {
+      name: "name",
+      defaultValue: "",
+      type: "text",
+    },
+    {
       name: "role",
       defaultValue: "user",
       required: true,
-      //   admin: {
-      //     // condition: ({req}) => req.user.role === "admin", // justadmin can only see this page
-      //     condition: () => false,
-      //   },
+      // admin: {
+      //   condition: ({ req }) => req.user.role === "admin", // justadmin can only see this page
+      //   // condition: () => false,
+      // },
       type: "select",
       options: [
         { label: "Admin", value: "admin" },
